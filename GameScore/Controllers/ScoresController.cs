@@ -12,12 +12,12 @@ namespace GameScore.Controllers
 {
     public class ScoresController : Controller
     {
-        private GameScoreContext db = new GameScoreContext();
+        private GameScoreContext db = new GameScoreContext();  //  a field referencing the database
 
         // GET: Scores
-        public ActionResult Index()
+        public ActionResult Index()  // references our index View
         {
-            return View(db.Scores.ToList());
+            return View(db.Scores.ToList());  // one way we can pass info to our view is this kind of method that returns the scores table as a list...there are dozens of ways
         }
 
         // GET: Scores/Details/5
@@ -27,7 +27,7 @@ namespace GameScore.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Score score = db.Scores.Find(id);
+            Score score = db.Scores.Find(id);  //.Find searches through whole database for the id. We are converting the row(id) into an object in order to return it.
             if (score == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace GameScore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Points")] Score score)
+        public ActionResult Create([Bind(Include = "ID,Name,Points,Team")] Score score)
         {
             if (ModelState.IsValid)
             {
